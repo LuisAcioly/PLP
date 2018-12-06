@@ -38,11 +38,25 @@ inverter([X|Y],Z):- inverter(Y,Y1), conc(Y1,[X],Z).
 enesimo(1,X,[X|_]).
 enesimo(N,X,[_|Y]):- enesimo(M,X,Y), N is M + 1.
 
-permutar([],[]).
-permutar([X|L],P):- permutar(L,L1), inserir(X,L1,P).
-
 remover(X,[X|C],C).
 remover(X,[Y|C],[Y|D]):- remover(X,C,D).
 
 insere(X,[X|_]).
-insere(X,[_|Y]):- insere(X,Y). 
+insere(X,[_|Y]):- insere(X,Y).
+
+intersec([X|Y],L,[X|Z]):- insere(X,L), intersec(Y,L,Z).
+intersec([_|X],L,Y) :- intersec(X, L, Y).
+inersec(_,_,[]).
+
+mdc(X, X, X).
+mdc(X, Y, Z) :- X > Y, W is X-Y, mdc(W, Y, Z).
+mdc(X, Y, Z) :- Y > X, W is Y-X, mdc(X, W, Z).
+
+particiona([], [], []).
+particiona([X], [X], []).
+particiona([X,Y|T], [X|L1], [Y|L2]):- particiona(T, L1, L2).
+
+insereOrdenado([], X, [X]).
+insereOrdenado([H|T], X, [H|R]) :- X > H, insereOrdenado(T, X, R).
+insereOrdenado([H|T], X, [X|R]) :- X < H.
+
